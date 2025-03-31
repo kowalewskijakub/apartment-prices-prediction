@@ -1,0 +1,30 @@
+[build-system]
+requires = [ "setuptools",]
+build-backend = "setuptools.build_meta"
+
+[project]
+requires-python = ">=3.9"
+name = "apartment_prices_prediction"
+readme = "README.md"
+dynamic = [ "version",]
+dependencies = [ "ipython>=8.10", "jupyterlab>=3.0", "notebook", "kedro~=0.19.12",]
+
+[project.scripts]
+apartment-prices-prediction = "apartment_prices_prediction.__main__:main"
+
+[tool.kedro]
+package_name = "apartment_prices_prediction"
+project_name = "apartment-prices-prediction"
+kedro_init_version = "0.19.12"
+tools = "['None']"
+example_pipeline = "False"
+source_dir = "src"
+
+[project.entry-points."kedro.hooks"]
+
+[tool.setuptools.dynamic.version]
+attr = "apartment_prices_prediction.__version__"
+
+[tool.setuptools.packages.find]
+where = [ "src",]
+namespaces = false

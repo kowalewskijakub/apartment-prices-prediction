@@ -28,3 +28,6 @@ attr = "apartment_prices_prediction.__version__"
 [tool.setuptools.packages.find]
 where = [ "src",]
 namespaces = false
+
+[tool.kedro_telemetry]
+project_id = "86328777f2fa4f2ab98d2288018df616"

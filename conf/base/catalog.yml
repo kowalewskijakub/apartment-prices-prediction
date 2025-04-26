@@ -2,3 +2,12 @@
 #
 # Documentation for this file format can be found in "The Data Catalog"
 # Link: https://docs.kedro.org/en/stable/data/data_catalog.html
+apartments_partitioned:
+  type: partitions.PartitionedDataset
+  path: data/01_raw/dataset
+  dataset: pandas.CSVDataset
+  filename_suffix: ".csv"
+
+concatenated_apartments:
+  type: pandas.CSVDataset
+  filepath: data/02_intermediate/concatenated_apartments.csv

@@ -3,6 +3,8 @@ from __future__ import annotations
 
 from kedro.framework.project import find_pipelines
 from kedro.pipeline import Pipeline
+from .pipelines.data_processing.pipeline import create_pipeline as create_data_processing_pipeline
+
 
 
 def register_pipelines() -> dict[str, Pipeline]:
@@ -13,4 +15,7 @@ def register_pipelines() -> dict[str, Pipeline]:
     """
     pipelines = find_pipelines()
     pipelines["__default__"] = sum(pipelines.values())
-    return pipelines
+    return {
+        "data_processing": create_data_processing_pipeline(),
+        "__default__": create_data_processing_pipeline()
+    }

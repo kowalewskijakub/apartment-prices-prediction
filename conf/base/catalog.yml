@@ -11,3 +11,7 @@ apartments_partitioned:
 concatenated_apartments:
   type: pandas.CSVDataset
   filepath: data/02_intermediate/concatenated_apartments.csv
+
+intermediate_imputed_apartments:
+  type: pandas.CSVDataset
+  filepath: data/02_intermediate/imputed_apartments.csv

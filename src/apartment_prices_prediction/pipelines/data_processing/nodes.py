@@ -4,6 +4,7 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+
 def concatenate_data(data: dict[str, pd.DataFrame]) -> pd.DataFrame:
     all_dfs = []
     for partition_id, partition_load_func in data.items():
@@ -46,3 +47,36 @@ def impute_missing_values(df: pd.DataFrame) -> pd.DataFrame:
     logger.info(f"Imputation complete. Final shape: {df.shape}")
 
     return df
+
+
+def impute_floor_count(df: pd.DataFrame) -> pd.DataFrame:
+    df_copy = df.copy()
+
+    # Jeśli type == "tenement" i brak floorCount → 5 pięter
+    mask_tenement = df_copy["floorCount"].isna() & (df_copy["type"] == "tenement")
+    df_copy.loc[mask_tenement, "floorCount"] = 5
+
+    # Jeśli type == "blockOfFlats" → 11 pięter
+    mask_block = df_copy["floorCount"].isna() & (df_copy["type"] == "blockOfFlats")
+    df_copy.loc[mask_block, "floorCount"] = 11
+
+    # Jeśli type == "apartmentBuilding" → 20 pięter
+    mask_apartment = df_copy["floorCount"].isna() & (df_copy["type"] == "apartmentBuilding")
+    df_copy.loc[mask_apartment, "floorCount"] = 20
+
+    # Jeśli jest winda → przypisz minimum 9
+    mask_elevator = df_copy["floorCount"].isna() & (df_copy["hasElevator"] == "yes")
+    df_copy.loc[mask_elevator, "floorCount"] = 9
+
+    # floorCount nie może być mniejsze niż floor
+    mask_fix = df_copy["floorCount"] < df_copy["floor"]
+    df_copy.loc[mask_fix, "floorCount"] = df_copy.loc[mask_fix, "floor"]
+
+    # usuwanie podejrzanych przypadków z floorCount == 1
+    before = len(df_copy)
+    df_copy = df_copy[df_copy["floorCount"] != 1]
+    logger.info(f"Usunięto {before - len(df_copy)} wierszy z floorCount == 1")
+
+    # usuwanie wszystkich pozostałych wierszy z NaN
+    df_copy = df_copy.dropna(subset=["floorCount"])
+    return df_copy

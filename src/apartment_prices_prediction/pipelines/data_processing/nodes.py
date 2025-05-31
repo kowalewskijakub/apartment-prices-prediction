@@ -1,8 +1,9 @@
+import logging
+
+import numpy as np
 import pandas as pd
 from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import MinMaxScaler
-import logging
-import numpy as np
 
 logger = logging.getLogger(__name__)
 
@@ -82,7 +83,6 @@ def impute_categorical_columns(df: pd.DataFrame, columns=None) -> pd.DataFrame:
 
 
 def remove_outliers(df: pd.DataFrame, columns: list[str] = None) -> pd.DataFrame:
-    """Removes outliers from numerical columns using the IQR method."""
     df_copy = df.copy()
 
     if columns is None:
@@ -111,16 +111,13 @@ def remove_outliers(df: pd.DataFrame, columns: list[str] = None) -> pd.DataFrame
     return df_clean
 
 
-def normalize_numerical_columns(df: pd.DataFrame, columns: list[str] = None) -> pd.DataFrame:
-    """Normalizes numerical columns using MinMaxScaler."""
+def normalize_numerical_columns(df: pd.DataFrame) -> pd.DataFrame:
     df_copy = df.copy()
 
-    if columns is None:
-        columns_to_normalize = df_copy.select_dtypes(include=np.number).columns.tolist()
-        columns_to_exclude = ['price', 'year', 'month']
-        columns_to_normalize = [col for col in columns_to_normalize if col not in columns_to_exclude]
-    else:
-        columns_to_normalize = columns
+    columns_to_normalize = df_copy.select_dtypes(include=np.number).columns.tolist()
+    columns_to_exclude = ['squareMeters', 'buildYear', 'price', 'year', 'month', 'latitude', 'longitude', 'floor',
+                          'floorCount']
+    columns_to_normalize = [col for col in columns_to_normalize if col not in columns_to_exclude]
 
     if not columns_to_normalize:
         logger.warning("No columns to normalize.")
@@ -137,24 +134,22 @@ def normalize_numerical_columns(df: pd.DataFrame, columns: list[str] = None) -> 
 
 
 def feature_engineering(df: pd.DataFrame) -> pd.DataFrame:
-    """Creates new features for the apartment data."""
     df_copy = df.copy()
     logger.info("Starting feature engineering.")
 
-    if 'price' in df_copy.columns and 'area' in df_copy.columns:
-        df_copy['price_per_m2'] = df_copy['price'] / df_copy['area'].replace(0, np.nan)
-        logger.info("Created 'price_per_m2' feature.")
+    df_copy['price_per_m2'] = df_copy['price'] / df_copy['squareMeters'].replace(0, np.nan)
+    logger.info("Created 'price_per_m2' feature.")
 
-    if 'buildYear' in df_copy.columns and 'year' in df_copy.columns:
-        df_copy['year'] = pd.to_numeric(df_copy['year'], errors='coerce')
-        df_copy['buildYear'] = pd.to_numeric(df_copy['buildYear'], errors='coerce')
-        df_copy['age'] = df_copy['year'] - df_copy['buildYear']
-        df_copy.loc[(df_copy['age'] < 0) | (df_copy['age'] > 200), 'age'] = np.nan
-        logger.info("Created 'age' feature.")
+    df_copy['year'] = pd.to_numeric(df_copy['year'], errors='coerce')
+    df_copy['buildYear'] = pd.to_numeric(df_copy['buildYear'], errors='coerce')
+    df_copy['age'] = df_copy['year'] - df_copy['buildYear']
+    df_copy.loc[(df_copy['age'] < 0) | (df_copy['age'] > 200), 'age'] = np.nan
+    logger.info("Created 'age' feature.")
 
-    if 'floor' in df_copy.columns and 'floorCount' in df_copy.columns:
-        df_copy['floor_ratio'] = df_copy['floor'] / df_copy['floorCount'].replace(0, np.nan)
-        logger.info("Created 'floor_ratio' feature.")
+    df_copy['floor_ratio'] = df_copy['floor'] / df_copy['floorCount']
+    df_copy['floor_ratio'] = df_copy['floor_ratio'].replace([np.inf, -np.inf], np.nan)
+    df_copy.loc[df_copy['floorCount'] <= 0, 'floor_ratio'] = 0
+    logger.info("Created 'floor_ratio' feature.")
 
     logger.info("Feature engineering complete.")
     logger.info(f"Final columns: {df_copy.columns.tolist()}")

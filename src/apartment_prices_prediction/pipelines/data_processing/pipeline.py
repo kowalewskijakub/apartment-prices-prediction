@@ -1,5 +1,12 @@
 from kedro.pipeline import Pipeline, node, pipeline
-from .nodes import concatenate_data, impute_missing_values, impute_floor_count
+from .nodes import (
+    concatenate_data,
+    impute_numerical_columns,
+    impute_categorical_columns,
+    remove_outliers,
+    normalize_numerical_columns,
+    feature_engineering,
+)
 
 
 def create_pipeline(**kwargs) -> Pipeline:
@@ -12,16 +19,34 @@ def create_pipeline(**kwargs) -> Pipeline:
                 name="concatenate_monthly_data_node",
             ),
             node(
-                func=impute_missing_values,
+                func=impute_numerical_columns,
                 inputs="concatenated_apartments",
-                outputs="intermediate_imputed_apartments",
-                name="impute_missing_values_node",
+                outputs="intermediate_imputed_only_numerical_apartments",
+                name="impute_numerical_columns_node",
             ),
             node(
-                func=impute_floor_count,
-                inputs="concatenated_apartments",
-                outputs="floorCount_imputed_apartments",  # <- ten output!
-                name="impute_floor_count_node",
+                func=impute_categorical_columns,
+                inputs="intermediate_imputed_only_numerical_apartments",
+                outputs="intermediate_imputed_apartments",
+                name="impute_categorical_columns_node",
+            ),
+            node(
+                func=remove_outliers,
+                inputs="intermediate_imputed_apartments",
+                outputs="apartments_without_outliers",
+                name="outlier_removal_node",
+            ),
+            node(
+                func=normalize_numerical_columns,
+                inputs="apartments_without_outliers",
+                outputs="intermediate_normalized_apartments",
+                name="normalization_node",
+            ),
+            node(
+                func=feature_engineering,
+                inputs="intermediate_normalized_apartments",
+                outputs="primary_apartments",
+                name="feature_engineering_node",
             ),
         ]
     )

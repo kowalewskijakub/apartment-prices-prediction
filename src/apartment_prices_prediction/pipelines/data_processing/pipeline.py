@@ -37,16 +37,16 @@ def create_pipeline(**kwargs) -> Pipeline:
                 name="outlier_removal_node",
             ),
             node(
-                func=normalize_numerical_columns,
-                inputs="apartments_without_outliers",
-                outputs="intermediate_normalized_apartments",
-                name="normalization_node",
-            ),
-            node(
                 func=feature_engineering,
-                inputs="intermediate_normalized_apartments",
+                inputs="apartments_without_outliers",
                 outputs="primary_apartments",
                 name="feature_engineering_node",
             ),
+            node(
+                func=normalize_numerical_columns,
+                inputs="primary_apartments",
+                outputs="primary_normalized_apartments",
+                name="normalization_node",
+            )
         ]
     )

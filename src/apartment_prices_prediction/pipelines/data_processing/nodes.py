@@ -115,8 +115,8 @@ def normalize_numerical_columns(df: pd.DataFrame) -> pd.DataFrame:
     df_copy = df.copy()
 
     columns_to_normalize = df_copy.select_dtypes(include=np.number).columns.tolist()
-    columns_to_exclude = ['squareMeters', 'buildYear', 'price', 'year', 'month', 'latitude', 'longitude', 'floor',
-                          'floorCount']
+    columns_to_exclude = ['buildYear', 'price', 'year', 'month', 'latitude', 'longitude', 'floor',
+                          'floorCount', 'floor_ratio']
     columns_to_normalize = [col for col in columns_to_normalize if col not in columns_to_exclude]
 
     if not columns_to_normalize:

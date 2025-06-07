@@ -311,3 +311,9 @@ data/**
 
 # mlflow local runs
 mlruns/*
+
+
+AutogluonModels/
+*.pkl
+*.joblib
+

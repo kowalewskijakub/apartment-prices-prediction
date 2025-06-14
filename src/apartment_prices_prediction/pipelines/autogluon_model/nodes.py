@@ -14,9 +14,12 @@ def split_data(df: pd.DataFrame, target_col: str, test_size: float = 0.2, random
     return train_data, test_data
 
 
-def train_autogluon_model(train_data: pd.DataFrame, label: str, time_limit: int = 600):
+def train_autogluon_model(train_data: pd.DataFrame, label: str, excluded_features: list = None, time_limit: int = 600):
+    if excluded_features is None:
+        excluded_features = []
+
     predictor = TabularPredictor(label=label, eval_metric="root_mean_squared_error")
-    predictor.fit(train_data, time_limit=time_limit)
+    predictor.fit(train_data, excluded_features=excluded_features, time_limit=time_limit)
     return predictor
 
 

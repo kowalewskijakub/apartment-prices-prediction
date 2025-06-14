@@ -13,7 +13,11 @@ def create_pipeline(**kwargs) -> Pipeline:
         ),
         node(
             func=train_autogluon_model,
-            inputs={"train_data": "train_data", "label": "params:ag_label"},
+            inputs={
+                "train_data": "train_data",
+                "label": "params:ag_label",
+                "excluded_features": "params:ag_excluded_features"
+            },
             outputs="trained_model",
             name="train_autogluon_model_node",
         ),

@@ -2,6 +2,7 @@
 
 # AutoGluon parameters
 ag_label: price
+ag_excluded_features: [ "id", "ID" ]
 
 # Azure Upload parameters
 model_path: data/06_models/autogluon/predictor.pkl

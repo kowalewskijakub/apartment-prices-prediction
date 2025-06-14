@@ -137,9 +137,6 @@ def feature_engineering(df: pd.DataFrame) -> pd.DataFrame:
     df_copy = df.copy()
     logger.info("Starting feature engineering.")
 
-    df_copy['price_per_m2'] = df_copy['price'] / df_copy['squareMeters'].replace(0, np.nan)
-    logger.info("Created 'price_per_m2' feature.")
-
     df_copy['year'] = pd.to_numeric(df_copy['year'], errors='coerce')
     df_copy['buildYear'] = pd.to_numeric(df_copy['buildYear'], errors='coerce')
     df_copy['age'] = df_copy['year'] - df_copy['buildYear']

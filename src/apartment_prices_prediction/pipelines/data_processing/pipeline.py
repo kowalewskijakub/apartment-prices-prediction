@@ -1,4 +1,5 @@
 from kedro.pipeline import Pipeline, node, pipeline
+
 from .nodes import (
     concatenate_data,
     impute_numerical_columns,

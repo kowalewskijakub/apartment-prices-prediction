@@ -17,12 +17,12 @@ intermediate_imputed_apartments:
   filepath: data/02_intermediate/imputed_apartments.csv
 
 primary_apartments:
-    type: pandas.CSVDataset
-    filepath: data/03_primary/primary_apartments.csv
+  type: pandas.CSVDataset
+  filepath: data/03_primary/primary_apartments.csv
 
 primary_normalized_apartments:
-    type: pandas.CSVDataset
-    filepath: data/03_primary/primary_normalized_apartments.csv
+  type: pandas.CSVDataset
+  filepath: data/03_primary/primary_normalized_apartments.csv
 
 train_data:
   type: pandas.CSVDataset

@@ -1,5 +1,7 @@
 from kedro.pipeline import Pipeline, node, pipeline
+
 from .nodes import split_data, train_autogluon_model, predict_autogluon_model
+
 
 def create_pipeline(**kwargs) -> Pipeline:
     return pipeline([

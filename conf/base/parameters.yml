@@ -1,1 +1,7 @@
+# This file contains the parameters for the Kedro project
+
+# AutoGluon parameters
 ag_label: price
+
+# Azure Upload parameters
+model_path: data/06_models/autogluon/predictor.pkl

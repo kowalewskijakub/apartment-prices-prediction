@@ -1,18 +1,25 @@
 .. Apartment Prices Prediction documentation master file, created by
-sphinx-quickstart on Thu Jun 19 22:41:49 2025.
-You can adapt this file completely to your liking, but it should at least
-contain the root `toctree` directive.
+   sphinx-quickstart on Tue May 21 15:45:00 2024.
 
-Apartment Prices Prediction
-=======================================================
+Dokumentacja projektu Apartment Prices Prediction
+=================================================
 
-Contents
---------
+Celem projektu Apartment Prices Prediction jest stworzenie i wdrożenie modelu uczenia maszynowego do predykcji cen mieszkań na podstawie danych z rynku nieruchomości.
+
+Dokumentacja zawiera szczegółowy opis architektury projektu, przepływów danych, implementacji poszczególnych modułów oraz instrukcje dotyczące instalacji i użytkowania.
 
 .. toctree::
    :maxdepth: 2
+   :caption: Spis treści:
 
-   api/src.apartment_prices_prediction.pipelines
-   api/src.apartment_prices_prediction.pipelines.autogluon_model
-   api/src.apartment_prices_prediction.pipelines.azure_upload
-   api/src.apartment_prices_prediction.pipelines.data_processing
+   introduction
+   installation
+   pipelines
+   modules
+
+Indeksy i tabele
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`

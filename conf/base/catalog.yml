@@ -37,5 +37,5 @@ predictions:
   filepath: data/05_model_output/predictions.csv
 
 trained_model:
-  type: pickle.PickleDataset
-  filepath: data/06_models/autogluon/predictor.pkl
+  type: text.TextDataset
+  filepath: data/06_models/autogluon_path.txt

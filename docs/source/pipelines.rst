@@ -10,9 +10,9 @@ Główne potoki w projekcie
 
 Projekt definiuje trzy główne potoki, które są rejestrowane w pliku `pipeline_registry.py`:
 
-1.  **`data_processing`** – odpowiedzialny za pełne przygotowanie danych – od surowych, połączonych plików do oczyszczonego i przetworzonego zbioru gotowego do modelowania,
-2.  **`autogluon_model`** – odpowiedzialny za proces trenowania modelu uczenia maszynowego – dzieli dane na zbiory treningowe i testowe, trenuje model przy użyciu AutoGluon, a następnie generuje predykcje na zbiorze testowym,
-3.  **`azure_upload`** – odpowiedzialny za wdrożenie (deployment) modelu. Wysyła cały katalog z wytrenowanym predyktorem do usługi Azure Blob Storage.
+1.  **data_processing** – odpowiedzialny za pełne przygotowanie danych – od surowych, połączonych plików do oczyszczonego i przetworzonego zbioru gotowego do modelowania,
+2.  **autogluon_model** – odpowiedzialny za proces trenowania modelu uczenia maszynowego – dzieli dane na zbiory treningowe i testowe, trenuje model przy użyciu AutoGluon, a następnie generuje predykcje na zbiorze testowym,
+3.  **azure_upload** – odpowiedzialny za wdrożenie (deployment) modelu. Wysyła cały katalog z wytrenowanym predyktorem do usługi Azure Blob Storage.
 
 Potok domyślny (`__default__`)
 -----------------------------

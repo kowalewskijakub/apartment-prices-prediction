@@ -1,7 +1,7 @@
 .. Apartment Prices Prediction documentation master file, created by
-   sphinx-quickstart on Thu Jun 19 22:41:49 2025.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+sphinx-quickstart on Thu Jun 19 22:41:49 2025.
+You can adapt this file completely to your liking, but it should at least
+contain the root `toctree` directive.
 
 Apartment Prices Prediction
 =======================================================

@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 
 
 def split_data(
-    df: pd.DataFrame, target_col: str, test_size: float = 0.2, random_state: int = 42
+        df: pd.DataFrame, target_col: str, test_size: float = 0.2, random_state: int = 42
 ) -> Tuple[pd.DataFrame, pd.DataFrame]:
     """Dzieli dane na zbiór treningowy i testowy.
 
@@ -30,16 +30,17 @@ def split_data(
     )
     train_data = pd.concat([X_train, y_train], axis=1)
     test_data = pd.concat([X_test, y_test], axis=1)
-    logger.info(f"Podzielono dane. Zbiór treningowy: {len(train_data)} wierszy, zbiór testowy: {len(test_data)} wierszy.")
+    logger.info(
+        f"Podzielono dane. Zbiór treningowy: {len(train_data)} wierszy, zbiór testowy: {len(test_data)} wierszy.")
     return train_data, test_data
 
 
 def train_autogluon_model(
-    train_data: pd.DataFrame,
-    label: str,
-    model_path: str,
-    excluded_features: Optional[List[str]] = None,
-    time_limit: int = 600,
+        train_data: pd.DataFrame,
+        label: str,
+        model_path: str,
+        excluded_features: Optional[List[str]] = None,
+        time_limit: int = 600,
 ) -> str:
     """Trenuje model predykcyjny przy użyciu AutoGluon.
 

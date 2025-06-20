@@ -13,8 +13,10 @@ Dokumentacja zawiera szczegółowy opis architektury projektu, przepływów dany
    :caption: Spis treści:
 
    introduction
+   architecture
    installation
    pipelines
+   frontend
    modules
 
 Indeksy i tabele

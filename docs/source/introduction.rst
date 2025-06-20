@@ -5,43 +5,17 @@ Wprowadzenie
 
 Projekt **Apartment Prices Prediction** został zrealizowany w celu opracowania zaawansowanego modelu predykcyjnego, zdolnego do szacowania cen mieszkań w oparciu o ich atrybuty. Wykorzystuje on nowoczesne technologie i metodyki z zakresu inżynierii danych i uczenia maszynowego.
 
-
 Aplikacja jest utrzymywana w następujących repozytoriach GitHub:
 
-*   `Apartment Prices Prediction <https://github.com/kowalewskijakub/apartment-prices-prediction>`_ – repozytorium główne projektu, zawierające kod źródłowy modelu predykcyjnego oraz potoki przetwarzania danych,
-*   `Apartment Prices Prediction App <https://github.com/kowalewskijakub/apartment-prices-prediction-app>`_ – repozytorium aplikacji webowej opartej na Streamlit, która umożliwia interakcję z modelem predykcyjnym.
+*   `Apartment Prices Prediction <https://github.com/kowalewskijakub/apartment-prices-prediction>`_ – repozytorium główne projektu, zawierające kod źródłowy modelu predykcyjnego oraz potoki przetwarzania danych (backend).
+*   `Apartment Prices Prediction App <https://github.com/kowalewskijakub/apartment-prices-prediction-app>`_ – repozytorium aplikacji webowej opartej na Streamlit, która umożliwia interakcję z modelem predykcyjnym (frontend).
 
+Szczegółowy opis architektury obu komponentów oraz użytych technologii znajduje się w sekcji :doc:`architecture`.
 
-Architektura projektu
----------------------
+Domyślny przepływ pracy w projekcie backendowym obejmuje trzy główne etapy, realizowane przez odrębne potoki:
 
-Projekt oparty jest na frameworku **Kedro**, który narzuca modularną i skalowalną strukturę. Kluczowe elementy architektury to:
+1.  **przetwarzanie danych** – surowe dane są łączone, czyszczone, transformowane i przygotowywane do modelowania,
+2.  **trenowanie modelu** – przygotowane dane są wykorzystywane do trenowania modelu predykcyjnego przy użyciu biblioteki AutoGluon,
+3.  **wysyłanie modelu do chmury** – wytrenowany model jest archiwizowany i wysyłany do kontenera w usłudze Azure Blob Storage w celu dalszego wykorzystania przez aplikację frontendową.
 
-*   **potoki (pipelines)** – logika projektu jest zorganizowana w postaci potoków przetwarzania danych. Każdy potok składa się z węzłów (nodes), które realizują określone zadania,
-*   **katalog danych (data catalog)** – kedro zarządza ładowaniem i zapisywaniem danych w sposób abstrakcyjny, co ułatwia pracę z różnymi źródłami danych,
-*   **konfiguracja** – parametry działania potoków oraz dane uwierzytelniające są zarządzane poprzez pliki konfiguracyjne, co oddziela logikę od konfiguracji.
-
-
-Ponadto w ramach projektu wyodrębnia się aplikację w **Streamlit**, której zadaniem jest pobranie modelu oraz umożliwienie dokonywania predykcji przez użytkownika.
-
-
-Technologie
------------
-
-Główne technologie wykorzystane w projekcie to:
-
-*   **Kedro** – framework do budowy potoków danych,
-*   **Pandas** – biblioteka do manipulacji danymi,
-*   **Scikit-learn** – biblioteka do zadań pomocniczych w uczeniu maszynowym (imputacja, skalowanie),
-*   **AutoGluon** – zautomatyzowana platforma uczenia maszynowego (AutoML) do trenowania wysokiej jakości modeli predykcyjnych,
-*   **Azure Blob Storage** – usługa chmurowa do przechowywania wytrenowanego modelu,
-*   **Streamlit** – framework do tworzenia aplikacji webowych, umożliwiający interakcję z modelem predykcyjnym.
-
-Przepływ pracy
---------------
-
-Domyślny przepływ pracy w projekcie obejmuje trzy główne etapy, realizowane przez odrębne potoki:
-
-1.  **Przetwarzanie danych** – surowe dane są łączone, czyszczone, transformowane i przygotowywane do modelowania,
-2.  **Trenowanie modelu** – przygotowane dane są wykorzystywane do trenowania modelu predykcyjnego przy użyciu biblioteki AutoGluon,
-3.  **Wysyłanie modelu do chmury** – wytrenowany model jest archiwizowany i wysyłany do kontenera w usłudze Azure Blob Storage w celu dalszego wykorzystania.
+Działanie aplikacji frontendowej zostało szczegółowo opisane w rozdziale :doc:`frontend`.
